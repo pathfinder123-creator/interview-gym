@@ -114,22 +114,34 @@
 <section id="setup" class="grid">
     <div class="card">
       <h2>Choose Your Workout</h2>
-      <p class="sub">Select the job role you are preparing for. Each role has a 10-question bank; choose whether you want to practice 5, 7, or all 10 questions.</p>
+      <p class="sub">Select the job role you are preparing for. Each role has a 10-question bank; choose whether you want to practice 1, 5, 7, or all 10 questions.</p>
       <label for="role">Job role</label>
       <select id="role">
         <option value="">Select a role...</option>
         <option>Administrative Assistant</option>
+        <option>Automotive Service Technician</option>
+        <option>Business / Finance</option>
+        <option>Construction Manager / Project Coordinator</option>
         <option>Customer Service Representative</option>
+        <option>Dental Hygienist</option>
+        <option>Education / Paraeducator</option>
+        <option>Electrician</option>
+        <option>Emergency Medical Technician (EMT)</option>
+        <option>Engineering / Engineering Technology</option>
+        <option>General / Any Position</option>
+        <option>Healthcare / Nursing</option>
+        <option>Hospitality</option>
+        <option>HVAC Technician</option>
+        <option>IT Help Desk Technician</option>
         <option>Medical Assistant</option>
         <option>Pharmacy Technician</option>
-        <option>IT Help Desk Technician</option>
-        <option>Business / Finance</option>
-        <option>Engineering / Engineering Technology</option>
-        <option>Education / Paraeducator</option>
-        <option>Healthcare / Nursing</option>
+        <option>Physical Therapist Assistant</option>
+        <option>Respiratory Therapist</option>
         <option>Retail / Sales</option>
-        <option>Hospitality</option>
-        <option>General / Any Position</option>
+        <option>Robotics / Automation Technician</option>
+        <option>Surgical Technologist</option>
+        <option>Veterinary Technician</option>
+        <option>Welder</option>
       </select>
       <label for="questionCount">Number of questions</label>
       <select id="questionCount"><option value="1">1 Question</option>
@@ -262,7 +274,7 @@
 
 const questionBank = {
   // ---------- ADMINISTRATIVE ASSISTANT ----------
-  "Administrative Assistant": [
+  'Administrative Assistant': [
     "Tell me about yourself and why you are interested in an administrative assistant position.",
     "How do you prioritize when you have several tasks or deadlines at the same time?",
     "Tell me about a time you had to communicate with someone who was upset or difficult.",
@@ -274,8 +286,47 @@ const questionBank = {
     "How would you respond if two people gave you competing urgent requests?",
     "What strengths would you bring to an administrative support position?"
   ],
+  // ---------- AUTOMOTIVE SERVICE TECHNICIAN ----------
+  'Automotive Service Technician': [
+    "Tell me about yourself and why you are interested in automotive service work.",
+    "Describe a time you diagnosed or helped solve a mechanical or technical problem.",
+    "How do you approach troubleshooting when the cause of a problem is not immediately clear?",
+    "Tell me about a time you had to follow a detailed service, repair, or safety procedure.",
+    "Describe a situation in which accuracy was especially important to the quality of your work.",
+    "How would you explain a needed repair or technical issue to a customer who has little automotive knowledge?",
+    "Tell me about a time you had to learn how to use a new tool, piece of equipment, or technology.",
+    "Describe a time you discovered that your first approach to a problem was not working. What did you do next?",
+    "How do you balance completing work efficiently with making sure the job is done correctly and safely?",
+    "What strengths would you bring to an automotive service team?"
+  ],
+  // ---------- BUSINESS / FINANCE ----------
+  'Business / Finance': [
+    "Tell me about yourself and why you are interested in this area of business.",
+    "Describe a time when you used information or data to make a decision.",
+    "Tell me about a time you had to meet an important deadline.",
+    "Describe a situation in which you found an error and corrected it.",
+    "What professional skill are you currently working to strengthen?",
+    "Tell me about a time you had to organize or analyze information.",
+    "Describe a situation in which you had to explain information to someone else.",
+    "Tell me about a time you worked with others to accomplish a goal.",
+    "How do you maintain accuracy when working with numbers, records, or detailed information?",
+    "Why are you interested in this position, and what would you contribute?"
+  ],
+  // ---------- CONSTRUCTION MANAGER / PROJECT COORDINATOR ----------
+  'Construction Manager / Project Coordinator': [
+    "Tell me about yourself and why you are interested in construction management or project coordination.",
+    "Describe a project in which you had to coordinate people, materials, schedules, or deadlines.",
+    "Tell me about a time a project did not go according to plan. How did you respond?",
+    "How would you handle a situation in which two project priorities were competing for the same resources?",
+    "Describe a time you identified a potential safety, quality, or scheduling problem before it became more serious.",
+    "Tell me about a time you had to communicate technical or project information to people with different responsibilities.",
+    "How do you keep track of details when several parts of a project are moving at the same time?",
+    "Describe a time you had to resolve a disagreement within a team.",
+    "How would you respond if you learned that an important project milestone was at risk of being missed?",
+    "What qualities would you bring to a construction project team?"
+  ],
   // ---------- CUSTOMER SERVICE REPRESENTATIVE ----------
-  "Customer Service Representative": [
+  'Customer Service Representative': [
     "Tell me about yourself and why you are interested in customer service.",
     "Tell me about a time you helped someone who was frustrated.",
     "How would you handle a customer when you do not know the answer to their question?",
@@ -287,8 +338,138 @@ const questionBank = {
     "Tell me about a time you received constructive feedback. What did you do with it?",
     "Why should we hire you for this customer service position?"
   ],
+  // ---------- DENTAL HYGIENIST ----------
+  'Dental Hygienist': [
+    "Tell me about yourself and why you are interested in dental hygiene.",
+    "Describe a time you helped someone feel more comfortable during an unfamiliar or stressful situation.",
+    "How would you communicate with a patient who is anxious about dental treatment?",
+    "Tell me about a time when accuracy and attention to detail were especially important.",
+    "Describe a situation in which you had to follow infection-control, safety, or other detailed procedures.",
+    "How would you explain an oral-health recommendation to a patient who seems hesitant to follow it?",
+    "Tell me about a time you had to adapt your communication style to meet another person's needs.",
+    "Describe a time you worked closely with others to provide service or care.",
+    "How would you respond if you noticed something during patient care that you believed required the dentist's attention?",
+    "What qualities would you bring to a dental care team?"
+  ],
+  // ---------- EDUCATION / PARAEDUCATOR ----------
+  'Education / Paraeducator': [
+    "Tell me about yourself and why you are interested in education.",
+    "Describe a time you helped someone understand something difficult.",
+    "How would you respond when a student is struggling or disengaged?",
+    "Tell me about a time you had to be patient in a challenging situation.",
+    "How do you build positive working relationships with others?",
+    "Describe a time you adapted your approach to meet another person's needs.",
+    "How would you respond if a student became frustrated or upset?",
+    "Tell me about a time you worked as part of a team to support someone else.",
+    "Describe a situation in which you had to maintain professionalism during a difficult interaction.",
+    "What qualities do you believe are most important for someone working in an educational setting?"
+  ],
+  // ---------- ELECTRICIAN ----------
+  'Electrician': [
+    "Tell me about yourself and why you are interested in electrical work.",
+    "Describe a time you used a step-by-step process to troubleshoot a technical problem.",
+    "Tell me about a time when following a safety procedure was especially important.",
+    "How would you respond if you were asked to perform a task but were uncertain about the correct procedure?",
+    "Describe a project or assignment that required careful measurement, accuracy, or attention to detail.",
+    "Tell me about a time you had to interpret instructions, diagrams, plans, or other technical information.",
+    "Describe a time you found a problem that others had overlooked.",
+    "How do you stay productive while making sure your work remains safe and accurate?",
+    "Tell me about a time you worked with others to complete a hands-on project.",
+    "What strengths would you bring to an electrical team or apprenticeship?"
+  ],
+  // ---------- EMERGENCY MEDICAL TECHNICIAN (EMT) ----------
+  'Emergency Medical Technician (EMT)': [
+    "Tell me about yourself and why you are interested in emergency medical services.",
+    "Describe a time you remained calm while dealing with a stressful or rapidly changing situation.",
+    "How would you communicate with a patient who is frightened, confused, or in pain?",
+    "Tell me about a time you had to make a decision quickly using the information available to you.",
+    "Describe a situation in which following a procedure or protocol was especially important.",
+    "Tell me about a time you had to communicate critical information clearly and concisely.",
+    "How would you respond if several people at an emergency scene were demanding your attention at once?",
+    "Describe a time you worked closely with a team under pressure.",
+    "Tell me about a time you encountered a difficult situation and had to maintain professional composure.",
+    "What qualities would you bring to an emergency medical services team?"
+  ],
+  // ---------- ENGINEERING / ENGINEERING TECHNOLOGY ----------
+  'Engineering / Engineering Technology': [
+    "Tell me about yourself and why you are interested in engineering or engineering technology.",
+    "Describe a problem you solved using a systematic approach.",
+    "Tell me about a project where you had to work with others.",
+    "Describe a time when something did not work as expected. What did you do?",
+    "How do you approach learning a new technical skill or tool?",
+    "Tell me about a time you used data, measurements, or evidence to make a decision.",
+    "Describe a project in which you had to manage competing requirements or constraints.",
+    "Tell me about a time you received critical feedback on your work.",
+    "How do you approach a problem when you do not immediately know the solution?",
+    "What strengths would you bring to an engineering or engineering technology team?"
+  ],
+  // ---------- GENERAL / ANY POSITION ----------
+  'General / Any Position': [
+    "Tell me about yourself.",
+    "Why are you interested in this position?",
+    "What is one of your greatest strengths?",
+    "Tell me about a time you solved a problem.",
+    "Tell me about a time you worked successfully with others.",
+    "Describe a time you had to learn something new quickly.",
+    "Tell me about a time you had to manage competing priorities.",
+    "Describe a time you received constructive feedback and how you responded.",
+    "Tell me about a mistake or setback you experienced and what you learned from it.",
+    "Why should we hire you?"
+  ],
+  // ---------- HEALTHCARE / NURSING ----------
+  'Healthcare / Nursing': [
+    "Tell me about yourself and why you are interested in nursing or a healthcare career.",
+    "Describe a time when you demonstrated empathy or compassion toward someone who was anxious, upset, or in need of help.",
+    "Tell me about a time when you had to communicate important information clearly to another person.",
+    "Describe a situation in which accuracy and attention to detail were especially important.",
+    "Tell me about a time you worked successfully as part of a team.",
+    "Describe a situation in which you had to prioritize multiple responsibilities. How did you decide what to do first?",
+    "Tell me about a time you had to follow a detailed procedure or protocol.",
+    "How would you respond if a patient, family member, or member of the public became upset or dissatisfied?",
+    "Describe a time you faced an ethical or professional concern. What factors did you consider in deciding how to respond?",
+    "What qualities, skills, and experiences would you bring to a nursing or healthcare team?"
+  ],
+  // ---------- HOSPITALITY ----------
+  'Hospitality': [
+    "Tell me about yourself and why you are interested in hospitality.",
+    "Describe a time you provided excellent service.",
+    "How would you respond if several customers needed help at the same time?",
+    "Tell me about a time you remained professional under pressure.",
+    "How do you contribute to a positive team environment?",
+    "Describe a time you handled a customer complaint.",
+    "Tell me about a time you had to adapt quickly when plans or customer needs changed.",
+    "How do you make guests or customers feel welcome?",
+    "Describe a situation in which attention to detail affected the customer experience.",
+    "What strengths would you bring to a hospitality team?"
+  ],
+  // ---------- HVAC TECHNICIAN ----------
+  'HVAC Technician': [
+    "Tell me about yourself and why you are interested in HVAC work.",
+    "Describe a time you diagnosed or helped solve a mechanical, electrical, or technical problem.",
+    "How do you approach troubleshooting when a system has several possible causes of failure?",
+    "Tell me about a time you had to follow a detailed safety or service procedure.",
+    "Describe a situation in which careful measurement or attention to detail affected the outcome of your work.",
+    "How would you explain a system problem or recommended repair to a customer who is unfamiliar with HVAC equipment?",
+    "Tell me about a time you had to work in an uncomfortable, demanding, or time-sensitive environment.",
+    "Describe a time you had to learn a new tool, technology, or technical process.",
+    "How do you balance speed, customer expectations, safety, and quality when completing a service call?",
+    "What strengths would you bring to an HVAC service team?"
+  ],
+  // ---------- IT HELP DESK TECHNICIAN ----------
+  'IT Help Desk Technician': [
+    "Tell me about yourself and why you are interested in IT support.",
+    "Describe a technical problem you solved and how you approached it.",
+    "How would you explain a technical issue to someone with little technical knowledge?",
+    "Tell me about a time you had to troubleshoot something you had never seen before.",
+    "How do you prioritize multiple support requests?",
+    "Describe a time you had to learn a new technology or software tool.",
+    "Tell me about a time a solution you tried did not work. What did you do next?",
+    "How would you respond to a frustrated user who is having a technical problem?",
+    "Describe a time you documented a process, solution, or technical issue.",
+    "What strengths would you bring to an IT help desk team?"
+  ],
   // ---------- MEDICAL ASSISTANT ----------
-  "Medical Assistant": [
+  'Medical Assistant': [
     "Tell me about yourself and why you are interested in becoming a medical assistant.",
     "Describe a time when you had to protect confidential or sensitive information.",
     "How would you respond if a patient became upset or anxious?",
@@ -301,7 +482,7 @@ const questionBank = {
     "What qualities do you believe are most important for a successful medical assistant?"
   ],
   // ---------- PHARMACY TECHNICIAN ----------
-  "Pharmacy Technician": [
+  'Pharmacy Technician': [
     "Tell me about yourself and why you are interested in pharmacy technician work.",
     "Describe a time when accuracy was critical to completing a task.",
     "How do you stay organized when you have multiple responsibilities?",
@@ -313,73 +494,34 @@ const questionBank = {
     "Describe a time you had to learn technical information or a new process quickly.",
     "What qualities would you bring to a pharmacy team?"
   ],
-  // ---------- IT HELP DESK TECHNICIAN ----------
-  "IT Help Desk Technician": [
-    "Tell me about yourself and why you are interested in IT support.",
-    "Describe a technical problem you solved and how you approached it.",
-    "How would you explain a technical issue to someone with little technical knowledge?",
-    "Tell me about a time you had to troubleshoot something you had never seen before.",
-    "How do you prioritize multiple support requests?",
-    "Describe a time you had to learn a new technology or software tool.",
-    "Tell me about a time a solution you tried did not work. What did you do next?",
-    "How would you respond to a frustrated user who is having a technical problem?",
-    "Describe a time you documented a process, solution, or technical issue.",
-    "What strengths would you bring to an IT help desk team?"
+  // ---------- PHYSICAL THERAPIST ASSISTANT ----------
+  'Physical Therapist Assistant': [
+    "Tell me about yourself and why you are interested in becoming a physical therapist assistant.",
+    "Describe a time you encouraged someone who was frustrated or struggling to make progress.",
+    "How would you respond to a patient who is reluctant to participate in a prescribed activity?",
+    "Tell me about a time you had to observe someone's performance carefully and communicate what you noticed.",
+    "Describe a situation in which you had to follow a detailed plan or set of instructions.",
+    "How would you explain an exercise or activity to a patient who was having difficulty understanding it?",
+    "Tell me about a time you adapted your approach to another person's abilities or needs.",
+    "Describe a time you worked as part of a team to help someone reach a goal.",
+    "How would you respond if a patient reported a new symptom or unexpected change during a treatment session?",
+    "What qualities would you bring to a rehabilitation team?"
   ],
-  // ---------- BUSINESS / FINANCE ----------
-  "Business / Finance": [
-    "Tell me about yourself and why you are interested in this area of business.",
-    "Describe a time when you used information or data to make a decision.",
-    "Tell me about a time you had to meet an important deadline.",
-    "Describe a situation in which you found an error and corrected it.",
-    "What professional skill are you currently working to strengthen?",
-    "Tell me about a time you had to organize or analyze information.",
-    "Describe a situation in which you had to explain information to someone else.",
-    "Tell me about a time you worked with others to accomplish a goal.",
-    "How do you maintain accuracy when working with numbers, records, or detailed information?",
-    "Why are you interested in this position, and what would you contribute?"
-  ],
-  // ---------- ENGINEERING / ENGINEERING TECHNOLOGY ----------
-  "Engineering / Engineering Technology": [
-    "Tell me about yourself and why you are interested in engineering or engineering technology.",
-    "Describe a problem you solved using a systematic approach.",
-    "Tell me about a project where you had to work with others.",
-    "Describe a time when something did not work as expected. What did you do?",
-    "How do you approach learning a new technical skill or tool?",
-    "Tell me about a time you used data, measurements, or evidence to make a decision.",
-    "Describe a project in which you had to manage competing requirements or constraints.",
-    "Tell me about a time you received critical feedback on your work.",
-    "How do you approach a problem when you do not immediately know the solution?",
-    "What strengths would you bring to an engineering or engineering technology team?"
-  ],
-  // ---------- EDUCATION / PARAEDUCATOR ----------
-  "Education / Paraeducator": [
-    "Tell me about yourself and why you are interested in education.",
-    "Describe a time you helped someone understand something difficult.",
-    "How would you respond when a student is struggling or disengaged?",
-    "Tell me about a time you had to be patient in a challenging situation.",
-    "How do you build positive working relationships with others?",
-    "Describe a time you adapted your approach to meet another person's needs.",
-    "How would you respond if a student became frustrated or upset?",
-    "Tell me about a time you worked as part of a team to support someone else.",
-    "Describe a situation in which you had to maintain professionalism during a difficult interaction.",
-    "What qualities do you believe are most important for someone working in an educational setting?"
-  ],
-  // ---------- HEALTHCARE / NURSING ----------
-  "Healthcare / Nursing": [
-    "Tell me about yourself and why you are interested in nursing or a healthcare career.",
-    "Describe a time when you demonstrated empathy or compassion toward someone who was anxious, upset, or in need of help.",
-    "Tell me about a time when you had to communicate important information clearly to another person.",
-    "Describe a situation in which accuracy and attention to detail were especially important.",
-    "Tell me about a time you worked successfully as part of a team.",
-    "Describe a situation in which you had to prioritize multiple responsibilities. How did you decide what to do first?",
-    "Tell me about a time you had to follow a detailed procedure or protocol.",
-    "How would you respond if a patient, family member, or member of the public became upset or dissatisfied?",
-    "Describe a time you faced an ethical or professional concern. What factors did you consider in deciding how to respond?",
-    "What qualities, skills, and experiences would you bring to a nursing or healthcare team?"
+  // ---------- RESPIRATORY THERAPIST ----------
+  'Respiratory Therapist': [
+    "Tell me about yourself and why you are interested in respiratory care.",
+    "Describe a time you remained calm while helping someone who was anxious or distressed.",
+    "How would you communicate with a patient or family member who is frightened about a breathing problem or treatment?",
+    "Tell me about a time when careful monitoring and attention to detail were especially important.",
+    "Describe a situation in which you had to follow a clinical, safety, or technical procedure precisely.",
+    "Tell me about a time you had to prioritize several important responsibilities.",
+    "How would you respond if you noticed an unexpected change in a patient's condition or response to treatment?",
+    "Describe a time you communicated important information to members of a team.",
+    "Tell me about a time you had to learn or operate unfamiliar technical equipment.",
+    "What qualities would you bring to a respiratory care team?"
   ],
   // ---------- RETAIL / SALES ----------
-  "Retail / Sales": [
+  'Retail / Sales': [
     "Tell me about yourself and why you are interested in retail or sales.",
     "Describe a time you persuaded someone or helped them make a decision.",
     "How would you handle a customer who says they are unhappy with a product or service?",
@@ -391,31 +533,57 @@ const questionBank = {
     "Describe a time you worked successfully with a team during a busy period.",
     "Why would you be a strong addition to our sales or retail team?"
   ],
-  // ---------- HOSPITALITY ----------
-  "Hospitality": [
-    "Tell me about yourself and why you are interested in hospitality.",
-    "Describe a time you provided excellent service.",
-    "How would you respond if several customers needed help at the same time?",
-    "Tell me about a time you remained professional under pressure.",
-    "How do you contribute to a positive team environment?",
-    "Describe a time you handled a customer complaint.",
-    "Tell me about a time you had to adapt quickly when plans or customer needs changed.",
-    "How do you make guests or customers feel welcome?",
-    "Describe a situation in which attention to detail affected the customer experience.",
-    "What strengths would you bring to a hospitality team?"
+  // ---------- ROBOTICS / AUTOMATION TECHNICIAN ----------
+  'Robotics / Automation Technician': [
+    "Tell me about yourself and why you are interested in robotics or automation technology.",
+    "Describe a technical problem you diagnosed and the steps you used to solve it.",
+    "How do you approach troubleshooting when a system includes mechanical, electrical, and software components?",
+    "Tell me about a time you had to interpret technical documentation, diagrams, data, or specifications.",
+    "Describe a situation in which a small detail had a significant effect on a project's outcome.",
+    "Tell me about a time your first solution did not work. How did you adjust your approach?",
+    "How do you make safety part of your work when testing, maintaining, or troubleshooting equipment?",
+    "Describe a time you had to learn a new technology, tool, or process quickly.",
+    "Tell me about a time you collaborated with others to solve a technical problem.",
+    "What strengths would you bring to a robotics or automation team?"
   ],
-  // ---------- GENERAL / ANY POSITION ----------
-  "General / Any Position": [
-    "Tell me about yourself.",
-    "Why are you interested in this position?",
-    "What is one of your greatest strengths?",
-    "Tell me about a time you solved a problem.",
-    "Tell me about a time you worked successfully with others.",
-    "Describe a time you had to learn something new quickly.",
-    "Tell me about a time you had to manage competing priorities.",
-    "Describe a time you received constructive feedback and how you responded.",
-    "Tell me about a mistake or setback you experienced and what you learned from it.",
-    "Why should we hire you?"
+  // ---------- SURGICAL TECHNOLOGIST ----------
+  'Surgical Technologist': [
+    "Tell me about yourself and why you are interested in surgical technology.",
+    "Describe a time when following a detailed procedure exactly was especially important.",
+    "Tell me about a time you had to maintain concentration during a demanding or high-pressure task.",
+    "How would you respond if you noticed a possible break in sterile technique or another safety concern?",
+    "Describe a situation in which anticipating another person's needs helped a team work more effectively.",
+    "Tell me about a time when organization and preparation prevented a problem.",
+    "How do you respond when priorities change quickly and you must remain focused?",
+    "Describe a time you communicated an important concern to a team member or supervisor.",
+    "Tell me about a time you received corrective feedback about a procedure or skill. How did you respond?",
+    "What qualities would you bring to an operating-room team?"
+  ],
+  // ---------- VETERINARY TECHNICIAN ----------
+  'Veterinary Technician': [
+    "Tell me about yourself and why you are interested in veterinary technology.",
+    "Describe a time you helped calm or reassure someone who was worried about an animal or another important concern.",
+    "How would you communicate with a pet owner who is anxious or upset about their animal's condition?",
+    "Tell me about a time when careful observation helped you recognize an important change or problem.",
+    "Describe a situation in which you had to follow a detailed clinical, laboratory, or safety procedure.",
+    "How would you handle a situation in which an animal was frightened or difficult to manage while still protecting safety and welfare?",
+    "Tell me about a time you had to balance several responsibilities and decide what needed attention first.",
+    "Describe a time you worked closely with others to provide care or complete a technical task.",
+    "How would you respond if you noticed something about an animal's condition or treatment that concerned you?",
+    "What qualities would you bring to a veterinary care team?"
+  ],
+  // ---------- WELDER ----------
+  'Welder': [
+    "Tell me about yourself and why you are interested in welding.",
+    "Describe a project in which precision and attention to detail were especially important.",
+    "Tell me about a time you had to follow a safety procedure carefully.",
+    "How do you approach a task when you need to interpret measurements, drawings, specifications, or work instructions?",
+    "Describe a time you discovered a defect or quality problem in your work. What did you do?",
+    "Tell me about a time you had to adjust your technique after the first approach did not produce the result you wanted.",
+    "How do you maintain quality when working under a deadline or production goal?",
+    "Describe a time you had to learn a new tool, process, or technical skill.",
+    "Tell me about a time you worked with others to complete a hands-on project safely and efficiently.",
+    "What strengths would you bring to a welding or fabrication team?"
   ]
 };
 
