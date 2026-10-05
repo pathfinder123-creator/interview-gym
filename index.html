@@ -118,11 +118,15 @@
       <label for="role">Job role</label>
       <select id="role">
         <option value="">Select a role...</option>
+        <option>Accountant</option>
         <option>Administrative Assistant</option>
         <option>Automotive Service Technician</option>
+        <option>Biomedical Equipment Technician</option>
         <option>Business / Finance</option>
+        <option>Communications / Public Relations Specialist</option>
         <option>Construction Manager / Project Coordinator</option>
         <option>Customer Service Representative</option>
+        <option>Cybersecurity Analyst</option>
         <option>Dental Hygienist</option>
         <option>Education / Paraeducator</option>
         <option>Electrician</option>
@@ -133,12 +137,20 @@
         <option>Hospitality</option>
         <option>HVAC Technician</option>
         <option>IT Help Desk Technician</option>
+        <option>K-12 Teacher</option>
+        <option>Law Enforcement Officer</option>
+        <option>Marketing Specialist</option>
         <option>Medical Assistant</option>
+        <option>Medical Laboratory Technician</option>
+        <option>Paralegal / Legal Assistant</option>
         <option>Pharmacy Technician</option>
         <option>Physical Therapist Assistant</option>
         <option>Respiratory Therapist</option>
         <option>Retail / Sales</option>
         <option>Robotics / Automation Technician</option>
+        <option>Social Services / Case Manager</option>
+        <option>Software Developer</option>
+        <option>Supply Chain / Logistics Coordinator</option>
         <option>Surgical Technologist</option>
         <option>Veterinary Technician</option>
         <option>Welder</option>
@@ -273,8 +285,21 @@
 // ============================================================================
 
 const questionBank = {
+  // ---------- ACCOUNTANT ----------
+  "Accountant": [
+    "Tell me about yourself and what interests you about accounting.",
+    "Describe a time you worked with detailed numerical or financial information. How did you ensure accuracy?",
+    "Tell me about a time you found an error or discrepancy that others had missed.",
+    "How do you organize your work when several deadlines fall within the same period?",
+    "Describe a situation in which you had to explain financial or numerical information to someone without an accounting background.",
+    "Tell me about a time you had to follow a policy, procedure, or standard very carefully.",
+    "How would you respond if you were asked to record or approve something that did not appear to be properly documented?",
+    "Describe a time you used a spreadsheet, database, or other technology to organize or analyze information.",
+    "Tell me about a time you received feedback on your work and made an improvement.",
+    "What strengths would you bring to an accounting or finance team?"
+  ],
   // ---------- ADMINISTRATIVE ASSISTANT ----------
-  'Administrative Assistant': [
+  "Administrative Assistant": [
     "Tell me about yourself and why you are interested in an administrative assistant position.",
     "How do you prioritize when you have several tasks or deadlines at the same time?",
     "Tell me about a time you had to communicate with someone who was upset or difficult.",
@@ -287,7 +312,7 @@ const questionBank = {
     "What strengths would you bring to an administrative support position?"
   ],
   // ---------- AUTOMOTIVE SERVICE TECHNICIAN ----------
-  'Automotive Service Technician': [
+  "Automotive Service Technician": [
     "Tell me about yourself and why you are interested in automotive service work.",
     "Describe a time you diagnosed or helped solve a mechanical or technical problem.",
     "How do you approach troubleshooting when the cause of a problem is not immediately clear?",
@@ -299,8 +324,21 @@ const questionBank = {
     "How do you balance completing work efficiently with making sure the job is done correctly and safely?",
     "What strengths would you bring to an automotive service team?"
   ],
+  // ---------- BIOMEDICAL EQUIPMENT TECHNICIAN ----------
+  "Biomedical Equipment Technician": [
+    "Tell me about yourself and why you are interested in biomedical equipment technology.",
+    "Describe a time you diagnosed or helped solve a technical equipment problem.",
+    "How do you approach troubleshooting when equipment has several possible causes of failure?",
+    "Tell me about a time when safety procedures were especially important to the work you were doing.",
+    "Describe a situation in which accurate documentation or recordkeeping mattered.",
+    "How would you communicate with a healthcare employee who reports that a piece of equipment is not working correctly?",
+    "Tell me about a time you had to interpret a technical manual, schematic, diagram, or set of specifications.",
+    "Describe a time you had to prioritize several equipment or maintenance needs.",
+    "How would you respond if equipment passed an initial check but you still suspected there might be a problem?",
+    "What strengths would you bring to a biomedical equipment team?"
+  ],
   // ---------- BUSINESS / FINANCE ----------
-  'Business / Finance': [
+  "Business / Finance": [
     "Tell me about yourself and why you are interested in this area of business.",
     "Describe a time when you used information or data to make a decision.",
     "Tell me about a time you had to meet an important deadline.",
@@ -312,8 +350,21 @@ const questionBank = {
     "How do you maintain accuracy when working with numbers, records, or detailed information?",
     "Why are you interested in this position, and what would you contribute?"
   ],
+  // ---------- COMMUNICATIONS / PUBLIC RELATIONS SPECIALIST ----------
+  "Communications / Public Relations Specialist": [
+    "Tell me about yourself and why you are interested in communications or public relations.",
+    "Describe a time you had to adapt a message for a particular audience.",
+    "Tell me about a project in which writing, speaking, or presenting was central to your success.",
+    "How would you respond if an important message you prepared was misunderstood by its audience?",
+    "Describe a time you had to gather information from several sources and turn it into a clear message.",
+    "Tell me about a time you worked under a tight deadline while maintaining accuracy and professionalism.",
+    "How would you handle communicating about an organization during a difficult or sensitive situation?",
+    "Describe a time you collaborated with others on a communication, event, campaign, or presentation.",
+    "How do you decide which details are most important when a message needs to be concise?",
+    "What strengths would you bring to a communications or public relations team?"
+  ],
   // ---------- CONSTRUCTION MANAGER / PROJECT COORDINATOR ----------
-  'Construction Manager / Project Coordinator': [
+  "Construction Manager / Project Coordinator": [
     "Tell me about yourself and why you are interested in construction management or project coordination.",
     "Describe a project in which you had to coordinate people, materials, schedules, or deadlines.",
     "Tell me about a time a project did not go according to plan. How did you respond?",
@@ -326,7 +377,7 @@ const questionBank = {
     "What qualities would you bring to a construction project team?"
   ],
   // ---------- CUSTOMER SERVICE REPRESENTATIVE ----------
-  'Customer Service Representative': [
+  "Customer Service Representative": [
     "Tell me about yourself and why you are interested in customer service.",
     "Tell me about a time you helped someone who was frustrated.",
     "How would you handle a customer when you do not know the answer to their question?",
@@ -338,8 +389,21 @@ const questionBank = {
     "Tell me about a time you received constructive feedback. What did you do with it?",
     "Why should we hire you for this customer service position?"
   ],
+  // ---------- CYBERSECURITY ANALYST ----------
+  "Cybersecurity Analyst": [
+    "Tell me about yourself and why you are interested in cybersecurity.",
+    "Describe a technical problem you investigated and the steps you used to reach a solution.",
+    "How would you respond if you noticed unusual activity that might indicate a security incident?",
+    "Tell me about a time you had to follow a security, privacy, or access-control procedure carefully.",
+    "Describe a time you had to explain a technical issue to someone with limited technical knowledge.",
+    "How do you approach a problem when you do not yet have enough information to identify the cause?",
+    "Tell me about a time you had to learn a new technology, tool, or technical concept quickly.",
+    "How would you balance the need to investigate a possible threat with the need to avoid disrupting normal operations?",
+    "Describe a time you worked with others to resolve a technical or security-related problem.",
+    "What habits or strengths would help you succeed as a cybersecurity analyst?"
+  ],
   // ---------- DENTAL HYGIENIST ----------
-  'Dental Hygienist': [
+  "Dental Hygienist": [
     "Tell me about yourself and why you are interested in dental hygiene.",
     "Describe a time you helped someone feel more comfortable during an unfamiliar or stressful situation.",
     "How would you communicate with a patient who is anxious about dental treatment?",
@@ -352,7 +416,7 @@ const questionBank = {
     "What qualities would you bring to a dental care team?"
   ],
   // ---------- EDUCATION / PARAEDUCATOR ----------
-  'Education / Paraeducator': [
+  "Education / Paraeducator": [
     "Tell me about yourself and why you are interested in education.",
     "Describe a time you helped someone understand something difficult.",
     "How would you respond when a student is struggling or disengaged?",
@@ -365,7 +429,7 @@ const questionBank = {
     "What qualities do you believe are most important for someone working in an educational setting?"
   ],
   // ---------- ELECTRICIAN ----------
-  'Electrician': [
+  "Electrician": [
     "Tell me about yourself and why you are interested in electrical work.",
     "Describe a time you used a step-by-step process to troubleshoot a technical problem.",
     "Tell me about a time when following a safety procedure was especially important.",
@@ -378,7 +442,7 @@ const questionBank = {
     "What strengths would you bring to an electrical team or apprenticeship?"
   ],
   // ---------- EMERGENCY MEDICAL TECHNICIAN (EMT) ----------
-  'Emergency Medical Technician (EMT)': [
+  "Emergency Medical Technician (EMT)": [
     "Tell me about yourself and why you are interested in emergency medical services.",
     "Describe a time you remained calm while dealing with a stressful or rapidly changing situation.",
     "How would you communicate with a patient who is frightened, confused, or in pain?",
@@ -391,7 +455,7 @@ const questionBank = {
     "What qualities would you bring to an emergency medical services team?"
   ],
   // ---------- ENGINEERING / ENGINEERING TECHNOLOGY ----------
-  'Engineering / Engineering Technology': [
+  "Engineering / Engineering Technology": [
     "Tell me about yourself and why you are interested in engineering or engineering technology.",
     "Describe a problem you solved using a systematic approach.",
     "Tell me about a project where you had to work with others.",
@@ -404,7 +468,7 @@ const questionBank = {
     "What strengths would you bring to an engineering or engineering technology team?"
   ],
   // ---------- GENERAL / ANY POSITION ----------
-  'General / Any Position': [
+  "General / Any Position": [
     "Tell me about yourself.",
     "Why are you interested in this position?",
     "What is one of your greatest strengths?",
@@ -417,7 +481,7 @@ const questionBank = {
     "Why should we hire you?"
   ],
   // ---------- HEALTHCARE / NURSING ----------
-  'Healthcare / Nursing': [
+  "Healthcare / Nursing": [
     "Tell me about yourself and why you are interested in nursing or a healthcare career.",
     "Describe a time when you demonstrated empathy or compassion toward someone who was anxious, upset, or in need of help.",
     "Tell me about a time when you had to communicate important information clearly to another person.",
@@ -430,7 +494,7 @@ const questionBank = {
     "What qualities, skills, and experiences would you bring to a nursing or healthcare team?"
   ],
   // ---------- HOSPITALITY ----------
-  'Hospitality': [
+  "Hospitality": [
     "Tell me about yourself and why you are interested in hospitality.",
     "Describe a time you provided excellent service.",
     "How would you respond if several customers needed help at the same time?",
@@ -443,7 +507,7 @@ const questionBank = {
     "What strengths would you bring to a hospitality team?"
   ],
   // ---------- HVAC TECHNICIAN ----------
-  'HVAC Technician': [
+  "HVAC Technician": [
     "Tell me about yourself and why you are interested in HVAC work.",
     "Describe a time you diagnosed or helped solve a mechanical, electrical, or technical problem.",
     "How do you approach troubleshooting when a system has several possible causes of failure?",
@@ -456,7 +520,7 @@ const questionBank = {
     "What strengths would you bring to an HVAC service team?"
   ],
   // ---------- IT HELP DESK TECHNICIAN ----------
-  'IT Help Desk Technician': [
+  "IT Help Desk Technician": [
     "Tell me about yourself and why you are interested in IT support.",
     "Describe a technical problem you solved and how you approached it.",
     "How would you explain a technical issue to someone with little technical knowledge?",
@@ -468,8 +532,47 @@ const questionBank = {
     "Describe a time you documented a process, solution, or technical issue.",
     "What strengths would you bring to an IT help desk team?"
   ],
+  // ---------- K-12 TEACHER ----------
+  "K-12 Teacher": [
+    "Tell me about yourself and why you want to become a teacher.",
+    "Describe a time you helped someone understand a difficult idea or skill.",
+    "How would you respond to a student who is struggling but is reluctant to ask for help?",
+    "Tell me about a time you had to adapt your approach because people learned or responded differently.",
+    "How would you create a classroom environment in which students feel respected and able to participate?",
+    "Describe a time you had to manage several responsibilities while meeting an important deadline.",
+    "How would you communicate with a parent or guardian who has a concern about a student's progress?",
+    "Tell me about a time you received feedback that caused you to change or improve your approach.",
+    "How would you respond when a lesson or activity is not working as you expected?",
+    "What qualities would you bring to a school and its students?"
+  ],
+  // ---------- LAW ENFORCEMENT OFFICER ----------
+  "Law Enforcement Officer": [
+    "Tell me about yourself and why you are interested in law enforcement.",
+    "Describe a time you remained calm and professional during a tense or stressful situation.",
+    "Tell me about a time you had to make a decision while working with incomplete information.",
+    "How would you communicate with a person who is angry, frightened, or unwilling to cooperate?",
+    "Describe a situation in which following policy or procedure was especially important.",
+    "Tell me about a time you had to resolve or de-escalate a conflict.",
+    "How would you respond if you observed a coworker acting in a way that appeared inconsistent with policy or professional standards?",
+    "Describe a time you worked as part of a team in a demanding situation.",
+    "Tell me about a time your judgment or assumptions were challenged and how you responded.",
+    "What qualities would you bring to a law enforcement organization and the community it serves?"
+  ],
+  // ---------- MARKETING SPECIALIST ----------
+  "Marketing Specialist": [
+    "Tell me about yourself and why you are interested in marketing.",
+    "Describe a project in which you had to understand what a particular audience wanted or needed.",
+    "Tell me about a time you used information, feedback, or data to improve an idea or approach.",
+    "How would you decide how to promote a product, service, or event to a new audience?",
+    "Describe a time you had to balance creativity with specific requirements or goals.",
+    "Tell me about a time you worked with others to complete a campaign, presentation, event, or project.",
+    "How would you respond if a campaign or promotional idea was not producing the expected results?",
+    "Describe a time you had to communicate persuasively while remaining accurate and professional.",
+    "How do you manage competing deadlines when several marketing projects are active at once?",
+    "What strengths would you bring to a marketing team?"
+  ],
   // ---------- MEDICAL ASSISTANT ----------
-  'Medical Assistant': [
+  "Medical Assistant": [
     "Tell me about yourself and why you are interested in becoming a medical assistant.",
     "Describe a time when you had to protect confidential or sensitive information.",
     "How would you respond if a patient became upset or anxious?",
@@ -481,8 +584,34 @@ const questionBank = {
     "Tell me about a time you worked as part of a healthcare or school team.",
     "What qualities do you believe are most important for a successful medical assistant?"
   ],
+  // ---------- MEDICAL LABORATORY TECHNICIAN ----------
+  "Medical Laboratory Technician": [
+    "Tell me about yourself and why you are interested in medical laboratory technology.",
+    "Describe a time when accuracy and attention to detail were critical to your work.",
+    "Tell me about a time you had to follow a technical, laboratory, or safety procedure exactly.",
+    "How would you respond if a specimen, result, or label did not appear to match the information you expected?",
+    "Describe a time you had to stay focused while performing repetitive or highly detailed work.",
+    "How do you organize your work when several time-sensitive tasks need attention?",
+    "Tell me about a time you identified a possible error before it affected the final result.",
+    "How would you communicate an unusual or concerning finding through the proper chain of responsibility?",
+    "Describe a time you had to learn how to use unfamiliar equipment or a new technical process.",
+    "What qualities would you bring to a clinical laboratory team?"
+  ],
+  // ---------- PARALEGAL / LEGAL ASSISTANT ----------
+  "Paralegal / Legal Assistant": [
+    "Tell me about yourself and why you are interested in paralegal or legal assistant work.",
+    "Describe a time you had to organize a large amount of detailed information.",
+    "Tell me about a time when confidentiality was important to the work or responsibility you were handling.",
+    "How do you make sure documents, dates, names, and other important details are accurate?",
+    "Describe a time you had to research an unfamiliar topic and identify reliable information.",
+    "How would you manage competing requests from several attorneys, clients, or team members with different deadlines?",
+    "Tell me about a time you had to communicate professionally with someone who was upset or under stress.",
+    "How would you respond if you noticed an inconsistency or missing information in an important document?",
+    "Describe a time you had to follow a formal process or procedure carefully.",
+    "What strengths would you bring to a legal team?"
+  ],
   // ---------- PHARMACY TECHNICIAN ----------
-  'Pharmacy Technician': [
+  "Pharmacy Technician": [
     "Tell me about yourself and why you are interested in pharmacy technician work.",
     "Describe a time when accuracy was critical to completing a task.",
     "How do you stay organized when you have multiple responsibilities?",
@@ -495,7 +624,7 @@ const questionBank = {
     "What qualities would you bring to a pharmacy team?"
   ],
   // ---------- PHYSICAL THERAPIST ASSISTANT ----------
-  'Physical Therapist Assistant': [
+  "Physical Therapist Assistant": [
     "Tell me about yourself and why you are interested in becoming a physical therapist assistant.",
     "Describe a time you encouraged someone who was frustrated or struggling to make progress.",
     "How would you respond to a patient who is reluctant to participate in a prescribed activity?",
@@ -508,7 +637,7 @@ const questionBank = {
     "What qualities would you bring to a rehabilitation team?"
   ],
   // ---------- RESPIRATORY THERAPIST ----------
-  'Respiratory Therapist': [
+  "Respiratory Therapist": [
     "Tell me about yourself and why you are interested in respiratory care.",
     "Describe a time you remained calm while helping someone who was anxious or distressed.",
     "How would you communicate with a patient or family member who is frightened about a breathing problem or treatment?",
@@ -521,7 +650,7 @@ const questionBank = {
     "What qualities would you bring to a respiratory care team?"
   ],
   // ---------- RETAIL / SALES ----------
-  'Retail / Sales': [
+  "Retail / Sales": [
     "Tell me about yourself and why you are interested in retail or sales.",
     "Describe a time you persuaded someone or helped them make a decision.",
     "How would you handle a customer who says they are unhappy with a product or service?",
@@ -534,7 +663,7 @@ const questionBank = {
     "Why would you be a strong addition to our sales or retail team?"
   ],
   // ---------- ROBOTICS / AUTOMATION TECHNICIAN ----------
-  'Robotics / Automation Technician': [
+  "Robotics / Automation Technician": [
     "Tell me about yourself and why you are interested in robotics or automation technology.",
     "Describe a technical problem you diagnosed and the steps you used to solve it.",
     "How do you approach troubleshooting when a system includes mechanical, electrical, and software components?",
@@ -546,8 +675,47 @@ const questionBank = {
     "Tell me about a time you collaborated with others to solve a technical problem.",
     "What strengths would you bring to a robotics or automation team?"
   ],
+  // ---------- SOCIAL SERVICES / CASE MANAGER ----------
+  "Social Services / Case Manager": [
+    "Tell me about yourself and why you are interested in social services or case management.",
+    "Describe a time you listened to someone facing a difficult situation and helped identify next steps.",
+    "How would you build trust with a client who is hesitant to share information or accept assistance?",
+    "Tell me about a time you had to maintain appropriate boundaries while still being supportive.",
+    "How would you respond when a client needs a resource or service that your organization cannot provide directly?",
+    "Describe a time you worked with several people or organizations to address one person's needs.",
+    "How do you stay organized when managing multiple people, tasks, appointments, or deadlines?",
+    "Tell me about a time you encountered a perspective or life experience very different from your own.",
+    "How would you handle confidential or sensitive client information?",
+    "What qualities would you bring to a social services team and the people it serves?"
+  ],
+  // ---------- SOFTWARE DEVELOPER ----------
+  "Software Developer": [
+    "Tell me about yourself and why you are interested in software development.",
+    "Describe a programming or technical project you worked on and the role you played.",
+    "Tell me about a difficult bug or technical problem you encountered. How did you investigate it?",
+    "How do you approach a programming task when the requirements are incomplete or unclear?",
+    "Describe a time you received feedback on your code, design, or technical approach.",
+    "Tell me about a time you had to learn a new language, framework, tool, or technical concept.",
+    "How do you balance writing code quickly with producing code that is reliable and maintainable?",
+    "Describe a time you collaborated with others on a technical project.",
+    "How would you respond if a change you made caused an unexpected problem in an application?",
+    "What strengths would you bring to a software development team?"
+  ],
+  // ---------- SUPPLY CHAIN / LOGISTICS COORDINATOR ----------
+  "Supply Chain / Logistics Coordinator": [
+    "Tell me about yourself and why you are interested in supply chain or logistics.",
+    "Describe a time you had to coordinate several tasks, people, materials, or deadlines.",
+    "Tell me about a time a plan was disrupted unexpectedly. How did you adjust?",
+    "How would you respond if an important shipment or material was going to arrive late?",
+    "Describe a time you used data, records, or tracking information to solve a problem.",
+    "How do you prioritize when several customers or departments need something at the same time?",
+    "Tell me about a time accurate documentation was important to completing a task successfully.",
+    "Describe a time you worked with people from different departments or organizations to reach a common goal.",
+    "How would you look for opportunities to make a process more efficient without sacrificing accuracy or service?",
+    "What strengths would you bring to a supply chain or logistics team?"
+  ],
   // ---------- SURGICAL TECHNOLOGIST ----------
-  'Surgical Technologist': [
+  "Surgical Technologist": [
     "Tell me about yourself and why you are interested in surgical technology.",
     "Describe a time when following a detailed procedure exactly was especially important.",
     "Tell me about a time you had to maintain concentration during a demanding or high-pressure task.",
@@ -560,7 +728,7 @@ const questionBank = {
     "What qualities would you bring to an operating-room team?"
   ],
   // ---------- VETERINARY TECHNICIAN ----------
-  'Veterinary Technician': [
+  "Veterinary Technician": [
     "Tell me about yourself and why you are interested in veterinary technology.",
     "Describe a time you helped calm or reassure someone who was worried about an animal or another important concern.",
     "How would you communicate with a pet owner who is anxious or upset about their animal's condition?",
@@ -573,7 +741,7 @@ const questionBank = {
     "What qualities would you bring to a veterinary care team?"
   ],
   // ---------- WELDER ----------
-  'Welder': [
+  "Welder": [
     "Tell me about yourself and why you are interested in welding.",
     "Describe a project in which precision and attention to detail were especially important.",
     "Tell me about a time you had to follow a safety procedure carefully.",
