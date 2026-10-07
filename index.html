@@ -95,6 +95,13 @@
 <style id="custom-question-set-styles">
 .practice-source{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 4px}.practice-source label{margin:0;font-weight:700;display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 13px;cursor:pointer}.practice-source input{width:auto;margin:0}.custom-builder{margin-top:18px;padding-top:4px;border-top:1px solid var(--border)}.custom-question-row{display:grid;grid-template-columns:42px 1fr auto;gap:9px;align-items:start;margin:9px 0}.custom-question-number{font-weight:800;color:var(--collin-blue);padding-top:12px;text-align:center}.custom-question-row textarea{min-height:58px}.custom-question-actions{display:flex;gap:5px;flex-wrap:wrap;padding-top:4px}.mini-btn{padding:8px 10px;border-radius:8px;background:#eaf0fb;color:var(--collin-blue);border:1px solid #cbd7eb}.danger-btn{background:#fff;color:#8b1e2d;border:1px solid #d7aab1}.custom-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.preview-list{margin:10px 0 0;padding-left:24px}.preview-list li{margin:6px 0}@media(max-width:650px){.custom-question-row{grid-template-columns:34px 1fr}.custom-question-actions{grid-column:2}}
 </style>
+<style id="session-review-styles">
+#sessionPlayback{margin:18px 0}
+#sessionPlayback video{width:100%;aspect-ratio:16/9;background:#111;border-radius:12px;object-fit:contain}
+.session-review{background:#f7f9fc;border:1px solid var(--border);border-radius:10px;padding:18px;margin:18px 0}
+.session-review h3{margin:0 0 6px}
+.session-review textarea{min-height:80px}
+</style>
 </head>
 <body>
 
@@ -221,30 +228,15 @@
         <div id="questionText" class="question"></div>
 
         <video id="preview" autoplay muted playsinline></video>
+        <canvas id="recordingCanvas" width="1280" height="720" class="hidden" aria-hidden="true"></canvas>
         <div id="recordStatus" class="status">Camera is ready when you are.</div>
         <div class="button-row">
           <button id="startRec" class="primary" onclick="beginRecording()">Start Answer</button>
           <button id="stopRec" class="secondary hidden" onclick="stopRecording()">Stop Answer</button>
           <button id="retryBtn" class="outline hidden" onclick="retryQuestion()">Try This Question Again</button>
-          <button id="keepBtn" class="secondary hidden" onclick="keepAnswer()">Keep This Answer</button>
           <button id="nextBtn" class="primary hidden" onclick="nextQuestion()">Next Question</button>
         </div>
         <div id="answerTimer" class="timer hidden">0:00</div>
-        <div id="selfReview" class="review-panel hidden">
-          <h3>Review Your Answer</h3>
-          <p class="review-intro">Watch your recording, then evaluate your response before deciding whether to keep it or try again.</p>
-          <div class="review-question">Did I answer the question directly?</div>
-          <div class="review-options"><label><input type="radio" name="direct" value="yes"> Yes</label><label><input type="radio" name="direct" value="mostly"> Mostly</label><label><input type="radio" name="direct" value="notyet"> Not yet</label></div>
-          <div class="review-question">Did I provide a specific example or supporting detail?</div>
-          <div class="review-options"><label><input type="radio" name="example" value="yes"> Yes</label><label><input type="radio" name="example" value="somewhat"> Somewhat</label><label><input type="radio" name="example" value="notyet"> Not yet</label></div>
-          <div class="review-question">Was my answer organized and easy to follow?</div>
-          <div class="review-options"><label><input type="radio" name="organized" value="yes"> Yes</label><label><input type="radio" name="organized" value="mostly"> Mostly</label><label><input type="radio" name="organized" value="notyet"> Not yet</label></div>
-          <div class="review-question">Did I sound confident and professional?</div>
-          <div class="review-options"><label><input type="radio" name="professional" value="yes"> Yes</label><label><input type="radio" name="professional" value="mostly"> Mostly</label><label><input type="radio" name="professional" value="notyet"> Not yet</label></div>
-          <div class="review-question">Was my answer appropriately concise?</div>
-          <div class="review-options"><label><input type="radio" name="concise" value="yes"> Yes</label><label><input type="radio" name="concise" value="mostly"> Mostly</label><label><input type="radio" name="concise" value="notyet"> Not yet</label></div>
-          <div class="review-note">There are no right or wrong answers. The goal is to notice what you did well and what you might improve before a real interview.</div>
-        </div>
       </div>
 
       <aside class="card">
@@ -267,12 +259,25 @@
   <section id="complete" class="hidden" style="margin-top:24px">
     <div class="card">
       <h2>Interview Complete</h2>
-      <p class="sub">Review your practice session and download your recordings for submission or future practice.</p>
+      <p class="sub">Watch your full practice interview, complete one brief self-review, then download the single session video for submission or future practice.</p>
       <div id="summary"></div>
+      <div id="sessionPlayback" class="hidden">
+        <h3>Watch Your Full Interview</h3>
+        <video id="sessionPlaybackVideo" controls playsinline></video>
+      </div>
+      <div class="session-review">
+        <h3>Session Self-Review</h3>
+        <p class="review-intro">Think about your interview as a whole.</p>
+        <div class="review-question">Did I answer the questions directly and support my answers with specific examples or useful details?</div>
+        <div class="review-options"><label><input type="radio" name="sessionDirect" value="yes"> Yes</label><label><input type="radio" name="sessionDirect" value="mostly"> Mostly</label><label><input type="radio" name="sessionDirect" value="notyet"> Not yet</label></div>
+        <div class="review-question">Were my answers clear, focused, and professional?</div>
+        <div class="review-options"><label><input type="radio" name="sessionFocused" value="yes"> Yes</label><label><input type="radio" name="sessionFocused" value="mostly"> Mostly</label><label><input type="radio" name="sessionFocused" value="notyet"> Not yet</label></div>
+        <label for="sessionImprove">What is one thing I would improve before a real interview? <span class="note">(optional)</span></label>
+        <textarea id="sessionImprove" maxlength="600" placeholder="Example: I would make my examples more specific and keep my answers more focused."></textarea>
+      </div>
       <div class="button-row">
-        <button class="primary" id="downloadSessionBtn" onclick="downloadSessionVideo()" disabled>Preparing Full Interview Video…</button>
-<button class="primary" onclick="downloadVideo()">Download Individual Answers</button>
-        <button class="secondary" onclick="downloadSummary()">Download Practice Summary</button>
+        <button class="primary" id="downloadSessionBtn" onclick="downloadSessionVideo()" disabled>Preparing Interview Video…</button>
+        <button class="secondary" onclick="downloadSummary()">Download Self-Review Summary</button>
         <button class="outline" onclick="location.reload()">Start Another Interview</button>
       </div>
       <p class="note" style="margin-top:18px">For a class assignment, download the recording and submit it through your instructor's designated course system.</p>
@@ -792,6 +797,7 @@ const questionBank = {
 let role="", questions=[], qIndex=0, stream=null, recorder=null, chunks=[], recordings=[], startTime=0, timerInterval=null, totalSeconds=0, reviewComplete=false;
 let customQuestions=[""], customPreviewOrder=[], practiceSource="role";
 let sessionRecorder=null, sessionChunks=[], sessionBlob=null;
+let recordingCanvasStream=null, sessionCompositeStream=null, canvasAnimationId=null, answerStartTime=0;
 
 
 function currentPracticeSource(){return document.querySelector('input[name="practiceSource"]:checked')?.value||"role";}
@@ -832,6 +838,37 @@ async function startInterview(){
   try{stream=await navigator.mediaDevices.getUserMedia({video:true,audio:true});document.getElementById("preview").srcObject=stream;showQuestion();}
   catch(e){document.getElementById("recordStatus").textContent="Camera/microphone access was not granted. You can still review the questions, but recording requires browser permission.";showQuestion();}
 }
+function drawVideoCover(ctx,v,w,h){
+  const vw=v.videoWidth||1280,vh=v.videoHeight||720,k=Math.max(w/vw,h/vh),sw=w/k,sh=h/k;
+  try{ctx.drawImage(v,(vw-sw)/2,(vh-sh)/2,sw,sh,0,0,w,h);}catch(e){}
+}
+function wrapOverlayText(ctx,text,maxWidth){
+  const words=String(text||"").split(/\s+/),lines=[];let line="";
+  for(const word of words){const test=line?line+" "+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}
+  if(line)lines.push(line);return lines;
+}
+function drawRecordingFrame(){
+  const c=document.getElementById("recordingCanvas"),v=document.getElementById("preview");if(!c||!v)return;
+  const ctx=c.getContext("2d"),w=c.width,h=c.height;ctx.fillStyle="#111";ctx.fillRect(0,0,w,h);
+  if(v.readyState>=2)drawVideoCover(ctx,v,w,h);
+  const pw=Math.round(w*.76),px=Math.round((w-pw)/2),pad=20,bottom=5;
+  ctx.font="700 20px Arial";const lines=wrapOverlayText(ctx,questions[qIndex]||"",pw-pad*2),lh=26;
+  const ph=Math.min(h*.21,22+24+lines.length*lh+12),py=h-bottom-ph;
+  ctx.fillStyle="rgba(5,18,48,.86)";ctx.fillRect(px,py,pw,ph);
+  ctx.fillStyle="#f4c542";ctx.font="700 17px Arial";ctx.fillText(`Question ${qIndex+1} of ${questions.length}`,px+pad,py+22);
+  ctx.fillStyle="#fff";ctx.font="700 20px Arial";let ty=py+48;lines.slice(0,4).forEach(line=>{ctx.fillText(line,px+pad,ty);ty+=lh});
+  canvasAnimationId=requestAnimationFrame(drawRecordingFrame);
+}
+function prepareSessionCompositeStream(){
+  if(sessionCompositeStream)return sessionCompositeStream;
+  const c=document.getElementById("recordingCanvas");if(!c||!stream)return null;
+  if(!canvasAnimationId)drawRecordingFrame();
+  recordingCanvasStream=c.captureStream(30);
+  sessionCompositeStream=new MediaStream();
+  recordingCanvasStream.getVideoTracks().forEach(t=>sessionCompositeStream.addTrack(t));
+  stream.getAudioTracks().forEach(t=>sessionCompositeStream.addTrack(t));
+  return sessionCompositeStream;
+}
 function showQuestion(){
   document.getElementById("questionLabel").textContent=`Question ${qIndex+1} of ${questions.length}`;
   document.getElementById("questionText").textContent=questions[qIndex];
@@ -840,141 +877,92 @@ function showQuestion(){
   document.getElementById("stopRec").classList.add("hidden");
   document.getElementById("retryBtn").classList.add("hidden");
   document.getElementById("nextBtn").classList.add("hidden");
-  document.getElementById("selfReview").classList.add("hidden");
-  document.getElementById("keepBtn").classList.add("hidden");
   document.getElementById("answerTimer").classList.add("hidden");
-  reviewComplete=false;
-  clearReviewChoices();
-  document.getElementById("recordStatus").textContent="Camera is ready when you are.";
+  document.getElementById("recordStatus").textContent=qIndex===0?"Camera is ready when you are.":"Recording is paused. Start when you are ready for this question.";
+}
+function startSessionRecorder(){
+  if(sessionRecorder||!stream)return;
+  sessionChunks=[];sessionBlob=null;
+  const recordedStream=prepareSessionCompositeStream();
+  const types=["video/webm;codecs=vp9,opus","video/webm;codecs=vp8,opus","video/webm"];
+  const supported=types.find(t=>MediaRecorder.isTypeSupported(t));
+  sessionRecorder=new MediaRecorder(recordedStream,supported?{mimeType:supported}:undefined);
+  sessionRecorder.ondataavailable=e=>{if(e.data&&e.data.size)sessionChunks.push(e.data)};
+  sessionRecorder.onstop=()=>{
+    sessionBlob=new Blob(sessionChunks,{type:sessionRecorder.mimeType||"video/webm"});
+    const b=document.getElementById("downloadSessionBtn");if(b){b.disabled=false;b.textContent="Download Interview Video";}
+    const pv=document.getElementById("sessionPlaybackVideo");
+    if(pv){const u=URL.createObjectURL(sessionBlob);pv.src=u;pv.dataset.url=u;document.getElementById("sessionPlayback").classList.remove("hidden");}
+  };
+  sessionRecorder.start(500);
+  sessionRecorder.pause(); // Session exists, but no waiting/preparation footage is recorded.
 }
 function beginRecording(){
-  if(questions.length>1) startSessionRecorder();
   if(!stream){alert("Please allow camera and microphone access to record your answer.");return;}
-  chunks=[];
-  const mime=["video/webm;codecs=vp9,opus","video/webm;codecs=vp8,opus","video/webm"].find(x=>MediaRecorder.isTypeSupported(x));
-  recorder=new MediaRecorder(stream,mime?{mimeType:mime}:undefined);
-  recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
-  recorder.onstop=finishRecording;
-  recorder.start();
-  startTime=Date.now();
+  if(!sessionRecorder)startSessionRecorder();
+  if(sessionRecorder&&sessionRecorder.state==="paused")sessionRecorder.resume();
+  answerStartTime=Date.now();startTime=answerStartTime;
   document.getElementById("startRec").classList.add("hidden");
   document.getElementById("stopRec").classList.remove("hidden");
   document.getElementById("answerTimer").classList.remove("hidden");
+  document.getElementById("answerTimer").textContent="0:00";
   document.getElementById("recordStatus").textContent="Recording… Take your time and answer naturally.";
-  timerInterval=setInterval(()=>{
-    const sec=Math.floor((Date.now()-startTime)/1000);
-    document.getElementById("answerTimer").textContent=formatTime(sec);
-  },250);
+  timerInterval=setInterval(()=>{document.getElementById("answerTimer").textContent=formatTime(Math.floor((Date.now()-answerStartTime)/1000));},250);
 }
 function stopRecording(){
-  if(recorder && recorder.state!=="inactive") recorder.stop();
   clearInterval(timerInterval);
+  if(!sessionRecorder||sessionRecorder.state!=="recording")return;
+  sessionRecorder.requestData();
+  setTimeout(()=>{
+    if(sessionRecorder&&sessionRecorder.state==="recording")sessionRecorder.pause();
+    finishRecording();
+  },120);
 }
 function finishRecording(){
-  const duration=Math.max(1,Math.round((Date.now()-startTime)/1000));
-  totalSeconds+=duration;
-  const blob=new Blob(chunks,{type:"video/webm"});
-  recordings[qIndex]={blob,duration,question:questions[qIndex],review:null};
-  document.getElementById("recordStatus").textContent=`Answer recorded — ${formatTime(duration)}. Watch it, complete your self-review, then keep it or try again.`;
-  document.getElementById("selfReview").classList.remove("hidden");
+  const duration=Math.max(1,Math.round((Date.now()-answerStartTime)/1000));totalSeconds+=duration;
+  recordings[qIndex]={duration,question:questions[qIndex]};
+  document.getElementById("recordStatus").textContent=`Answer recorded — ${formatTime(duration)}. Recording is paused. You may retry this question or continue.`;
   document.getElementById("retryBtn").classList.remove("hidden");
-  document.getElementById("keepBtn").classList.remove("hidden");
-  document.getElementById("nextBtn").classList.add("hidden");
+  document.getElementById("nextBtn").classList.remove("hidden");
+  document.getElementById("nextBtn").textContent=qIndex===questions.length-1?"Finish Interview":"Next Question";
+  document.getElementById("stopRec").classList.add("hidden");
   document.getElementById("answerTimer").classList.add("hidden");
 }
 function retryQuestion(){
-  if(recordings[qIndex]) totalSeconds-=recordings[qIndex].duration;
-  recordings[qIndex]=null;
-  chunks=[];
-  reviewComplete=false;
-  clearReviewChoices();
-  document.getElementById("selfReview").classList.add("hidden");
+  // A MediaRecorder cannot remove an already-recorded segment. Retrying adds another take to the full session,
+  // so make that clear rather than silently pretending the first take was removed.
+  if(!confirm("Your first take is already part of the full session video. Record another take of this question as additional practice?"))return;
   document.getElementById("retryBtn").classList.add("hidden");
-  document.getElementById("keepBtn").classList.add("hidden");
   document.getElementById("nextBtn").classList.add("hidden");
   document.getElementById("startRec").classList.remove("hidden");
-  document.getElementById("recordStatus").textContent="Ready for another attempt.";
-}
-function completeSelfReview(){
-  const names=["direct","example","organized","professional","concise"];
-  if(!names.every(name=>document.querySelector(`input[name="${name}"]:checked`))) return false;
-  recordings[qIndex].review={};
-  names.forEach(name=>recordings[qIndex].review[name]=document.querySelector(`input[name="${name}"]:checked`).value);
-  reviewComplete=true;
-  return true;
-}
-function clearReviewChoices(){
-  ["direct","example","organized","professional","concise"].forEach(name=>{
-    document.querySelectorAll(`input[name="${name}"]`).forEach(input=>input.checked=false);
-  });
-}
-function keepAnswer(){
-  if(!recordings[qIndex]) return;
-  if(!completeSelfReview()){
-    alert("Please complete the quick self-review before keeping this answer.");
-    return;
-  }
-  document.getElementById("keepBtn").classList.add("hidden");
-  document.getElementById("nextBtn").classList.remove("hidden");
-  document.getElementById("recordStatus").textContent="Answer kept. You may continue or try the question again.";
+  document.getElementById("recordStatus").textContent="Recording is paused. Start when you are ready for another take.";
 }
 function nextQuestion(){
   if(!recordings[qIndex]){alert("Please record an answer before moving on.");return;}
-  if(!reviewComplete){
-    if(!completeSelfReview()){
-      alert("Please complete the quick self-review before moving on.");
-      return;
-    }
-  }
   if(qIndex<questions.length-1){qIndex++;showQuestion();}
   else completeInterview();
 }
 function completeInterview(){
-  stopSessionRecorder();
-  if(stream) stream.getTracks().forEach(t=>t.stop());
+  clearInterval(timerInterval);
+  if(sessionRecorder&&sessionRecorder.state==="recording")sessionRecorder.pause();
+  if(sessionRecorder&&sessionRecorder.state!=="inactive")sessionRecorder.stop();
+  if(stream)stream.getTracks().forEach(t=>t.stop());
+  if(canvasAnimationId){cancelAnimationFrame(canvasAnimationId);canvasAnimationId=null;}
   document.getElementById("interview").classList.add("hidden");
   document.getElementById("complete").classList.remove("hidden");
-  const answered=recordings.filter(Boolean).length;
-  const avg=answered?Math.round(totalSeconds/answered):0;
+  const answered=recordings.filter(Boolean).length,avg=answered?Math.round(totalSeconds/answered):0;
   document.getElementById("summary").innerHTML=`
     <div class="grid">
       <div><div class="score">${answered}/${questions.length}</div><strong>Questions completed</strong></div>
       <div><div class="score">${formatTime(avg)}</div><strong>Average response time</strong></div>
     </div>
-    <div class="feedback-box">
-      <strong>Before submitting:</strong>
-      Watch your recordings once. Look for eye contact, clarity, specific examples, confident delivery, and answers that directly address each question.
-    </div>`;
-}
-
-function startSessionRecorder(){
-  if(sessionRecorder || !stream) return;
-  sessionChunks=[]; sessionBlob=null;
-  const types=["video/webm;codecs=vp9,opus","video/webm;codecs=vp8,opus","video/webm"];
-  const supported=types.find(t=>MediaRecorder.isTypeSupported(t));
-  sessionRecorder=new MediaRecorder(stream,supported?{mimeType:supported}:undefined);
-  sessionRecorder.ondataavailable=e=>{if(e.data && e.data.size) sessionChunks.push(e.data);};
-  sessionRecorder.onstop=()=>{
-    sessionBlob=new Blob(sessionChunks,{type:sessionRecorder.mimeType||"video/webm"});
-    const b=document.getElementById("downloadSessionBtn");
-    if(b){b.disabled=false;b.textContent="Download Full Interview Session";}
-  };
-  sessionRecorder.start(1000);
-}
-function stopSessionRecorder(){
-  if(sessionRecorder && sessionRecorder.state!=="inactive") sessionRecorder.stop();
+    <div class="feedback-box"><strong>Review the interview as a whole:</strong> Notice whether you answered directly, used useful examples, stayed focused, and presented yourself professionally.</div>`;
 }
 function downloadSessionVideo(){
-  if(!sessionBlob){
-    alert("Your full-session video is still being prepared. Please wait a moment and try again.");
-    return;
-  }
-  const a=document.createElement("a");
-  const url=URL.createObjectURL(sessionBlob);
-  a.href=url;
+  if(!sessionBlob){alert("Your full-session video is still being prepared. Please wait a moment and try again.");return;}
+  const a=document.createElement("a"),url=URL.createObjectURL(sessionBlob);a.href=url;
   a.download=`Interview-Gym-${slug(role)}-${questions.length}-Question-Session.webm`;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),5000);
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);
 }
 
 function downloadVideo(){
