@@ -277,7 +277,7 @@
       </div>
       <div class="button-row">
         <button class="primary" id="downloadSessionBtn" onclick="downloadSessionVideo()" disabled>Preparing Interview Video…</button>
-        <button class="secondary" onclick="downloadSummary()">Download Self-Review Summary</button>
+        <button class="secondary" id="downloadSummaryBtn" onclick="downloadSummary()" disabled>Complete Self-Review to Download Summary</button>
         <button class="outline" onclick="location.reload()">Start Another Interview</button>
       </div>
       <p class="note" style="margin-top:18px">For a class assignment, download the recording and submit it through your instructor's designated course system.</p>
@@ -977,10 +977,45 @@ function downloadVideo(){
     setTimeout(()=>URL.revokeObjectURL(a.href),2000);
   });
 }
+
+function updateSummaryDownloadState(){
+  const ready=!!document.querySelector('input[name="sessionDirect"]:checked') &&
+              !!document.querySelector('input[name="sessionFocused"]:checked');
+  const btn=document.getElementById("downloadSummaryBtn");
+  if(btn){btn.disabled=!ready;btn.textContent=ready?"Download Self-Review Summary":"Complete Self-Review to Download Summary";}
+}
+document.addEventListener("change",e=>{
+  if(e.target && (e.target.name==="sessionDirect"||e.target.name==="sessionFocused")) updateSummaryDownloadState();
+});
+
 function downloadSummary(){
-  const lines=[`Collin College Career Center — Interview Practice Summary`,`Role: ${role}`,`Questions completed: ${recordings.filter(Boolean).length}/${questions.length}`,`Total recorded time: ${formatTime(totalSeconds)}`,"",...recordings.filter(Boolean).map((r,i)=>`Question ${i+1}: ${r.question}\nResponse time: ${formatTime(r.duration)}`)];
-  const blob=new Blob([lines.join("\n")],{type:"text/plain"});
-  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`Mock-Interview-Summary-${slug(role)}.txt`;a.click();
+  const direct=document.querySelector('input[name="sessionDirect"]:checked')?.value;
+  const focused=document.querySelector('input[name="sessionFocused"]:checked')?.value;
+  if(!direct||!focused){alert("Please complete the two self-review questions before downloading your summary.");return;}
+  const improve=document.getElementById("sessionImprove")?.value.trim()||"Not entered";
+  const label=v=>v==="yes"?"Yes":v==="mostly"?"Mostly":v==="notyet"?"Not yet":v;
+  const answered=recordings.filter(Boolean).length;
+  const avg=answered?Math.round(totalSeconds/answered):0;
+  const lines=[
+    "INTERVIEW GYM — SELF-REVIEW SUMMARY","",
+    `Practice date: ${new Date().toLocaleDateString()}`,
+    `Practice role / question set: ${role}`,
+    `Questions completed: ${answered} of ${questions.length}`,
+    `Average response time: ${formatTime(avg)}`,"",
+    "MY SELF-REVIEW","",
+    "1. Did I answer the questions directly and support my answers with specific examples or useful details?",
+    `My response: ${label(direct)}`,"",
+    "2. Were my answers clear, focused, and professional?",
+    `My response: ${label(focused)}`,"",
+    "3. What is one thing I would improve before a real interview?",
+    improve,"","QUESTIONS PRACTICED",""
+  ];
+  recordings.forEach((r,i)=>{if(r){lines.push(`${i+1}. ${r.question}`);lines.push(`   Response time: ${formatTime(r.duration)}`);lines.push("");}});
+  lines.push("Developed by the Collin College Career Center (c) 2026.");
+  const blob=new Blob([lines.join("\n")],{type:"text/plain;charset=utf-8"});
+  const a=document.createElement("a"),url=URL.createObjectURL(blob);a.href=url;
+  a.download=`Interview-Gym-${slug(role)}-Self-Review-Summary.txt`;
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);
 }
 function formatTime(sec){const m=Math.floor(sec/60),s=Math.floor(sec%60);return `${m}:${String(s).padStart(2,"0")}`}
 function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"")}
