@@ -92,6 +92,9 @@
 .final-description{font-size:clamp(18px,2vw,27px);line-height:1.4;font-weight:400}
 @media(max-width:700px){.final-cc-logo img{width:55%;max-width:220px}.final-blue-banner{flex-direction:column;gap:18px;padding:22px}.final-gym-graphic{flex:0 0 auto;width:68%}.final-headline{font-size:25px}.final-description{font-size:17px}}
 </style>
+<style id="custom-question-set-styles">
+.practice-source{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 4px}.practice-source label{margin:0;font-weight:700;display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 13px;cursor:pointer}.practice-source input{width:auto;margin:0}.custom-builder{margin-top:18px;padding-top:4px;border-top:1px solid var(--border)}.custom-question-row{display:grid;grid-template-columns:42px 1fr auto;gap:9px;align-items:start;margin:9px 0}.custom-question-number{font-weight:800;color:var(--collin-blue);padding-top:12px;text-align:center}.custom-question-row textarea{min-height:58px}.custom-question-actions{display:flex;gap:5px;flex-wrap:wrap;padding-top:4px}.mini-btn{padding:8px 10px;border-radius:8px;background:#eaf0fb;color:var(--collin-blue);border:1px solid #cbd7eb}.danger-btn{background:#fff;color:#8b1e2d;border:1px solid #d7aab1}.custom-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.preview-list{margin:10px 0 0;padding-left:24px}.preview-list li{margin:6px 0}@media(max-width:650px){.custom-question-row{grid-template-columns:34px 1fr}.custom-question-actions{grid-column:2}}
+</style>
 </head>
 <body>
 
@@ -114,9 +117,14 @@
 <section id="setup" class="grid">
     <div class="card">
       <h2>Choose Your Workout</h2>
-      <p class="sub">Select the job role you are preparing for. Each role has a 10-question bank; choose whether you want to practice 1, 5, 7, or all 10 questions.</p>
-      <label for="role">Job role</label>
-      <select id="role">
+      <p class="sub">Practice with one of Interview Gym's job-role question banks, or build your own question set for a specific interview, class assignment, or personal practice.</p>
+      <label>Practice source</label>
+      <div class="practice-source">
+        <label><input type="radio" name="practiceSource" value="role" checked onchange="togglePracticeSource()"> Choose a Job Role</label>
+        <label><input type="radio" name="practiceSource" value="custom" onchange="togglePracticeSource()"> Build My Own Question Set</label>
+      </div>
+      <div id="rolePracticePanel">
+        <label for="role">Job role</label><select id="role">
         <option value="">Select a role...</option>
         <option>Accountant</option>
         <option>Administrative Assistant</option>
@@ -155,18 +163,38 @@
         <option>Veterinary Technician</option>
         <option>Welder</option>
       </select>
-      <label for="questionCount">Number of questions</label>
-      <select id="questionCount"><option value="1">1 Question</option>
-        <option value="5">5 questions</option>
-        <option value="7">7 questions</option>
-        <option value="10">10 questions</option>
-      </select>
-<div class="feedback-box" style="margin-top:12px">
-<strong>Recording format:</strong> Choose <strong>1 question</strong> for a quick practice session. Choose <strong>5, 7, or 10 questions</strong> to create one continuous interview video for class submission.
-</div>
-      <div class="button-row">
-        <button class="primary" onclick="startInterview()">Start Interview Workout</button>
+        <label for="questionCount">Number of questions</label>
+        <select id="questionCount"><option value="1">1 Question</option><option value="5">5 questions</option><option value="7">7 questions</option><option value="10">10 questions</option></select>
+        <div class="feedback-box" style="margin-top:12px"><strong>Recording format:</strong> Choose <strong>1 question</strong> for a quick practice session. Choose <strong>5, 7, or 10 questions</strong> to create one continuous interview video for class submission.</div>
       </div>
+      <div id="customPracticePanel" class="custom-builder hidden">
+        <label for="customSetName">Question set name <span class="note">(optional)</span></label>
+        <input id="customSetName" type="text" maxlength="80" placeholder="Example: Marketing Internship Interview">
+        <label>Your questions</label>
+        <p class="sub">Add up to 20 questions. Type them one at a time or paste a list.</p>
+        <div id="customQuestionList"></div>
+        <div class="custom-toolbar">
+          <button type="button" class="secondary" onclick="addCustomQuestion()">+ Add Another Question</button>
+          <button type="button" class="outline" onclick="togglePasteQuestions()">Paste a List</button>
+          <button type="button" class="outline" onclick="clearCustomQuestions()">Clear My Questions</button>
+        </div>
+        <div id="pasteQuestionsPanel" class="hidden" style="margin-top:14px">
+          <label for="pasteQuestions">Paste questions</label>
+          <textarea id="pasteQuestions" placeholder="Paste one question per line. Numbered or bulleted lists are okay."></textarea>
+          <div class="button-row"><button type="button" class="secondary" onclick="importPastedQuestions()">Add These Questions</button></div>
+        </div>
+        <label for="customOrder">Practice order</label>
+        <select id="customOrder" onchange="updateCustomPreview()"><option value="straight">In the order I entered them</option><option value="random">Randomize my questions</option></select>
+        <div class="custom-toolbar">
+          <button type="button" id="shuffleAgainBtn" class="outline hidden" onclick="shuffleCustomPreview()">Shuffle Again</button>
+          <button type="button" class="outline" onclick="saveQuestionSet()">Save My Question Set</button>
+          <button type="button" class="outline" onclick="document.getElementById('loadQuestionSetFile').click()">Load a Question Set</button>
+          <input id="loadQuestionSetFile" class="hidden" type="file" accept=".json,application/json" onchange="loadQuestionSet(event)">
+        </div>
+        <div class="feedback-box" style="margin-top:14px"><strong>Question order preview</strong><ol id="customPreviewList" class="preview-list"></ol></div>
+        <p class="note">When you start practice, this order stays fixed for the entire session. Your custom questions remain in this browser unless you save a question-set file.</p>
+      </div>
+      <div class="button-row"><button class="primary" onclick="startInterview()">Start Interview Workout</button></div>
     </div>
 
     <div class="card">
@@ -762,26 +790,47 @@ const questionBank = {
 
 
 let role="", questions=[], qIndex=0, stream=null, recorder=null, chunks=[], recordings=[], startTime=0, timerInterval=null, totalSeconds=0, reviewComplete=false;
+let customQuestions=[""], customPreviewOrder=[], practiceSource="role";
 let sessionRecorder=null, sessionChunks=[], sessionBlob=null;
 
+
+function currentPracticeSource(){return document.querySelector('input[name="practiceSource"]:checked')?.value||"role";}
+function togglePracticeSource(){practiceSource=currentPracticeSource();document.getElementById("rolePracticePanel").classList.toggle("hidden",practiceSource!=="role");document.getElementById("customPracticePanel").classList.toggle("hidden",practiceSource!=="custom");if(practiceSource==="custom"){renderCustomQuestions();updateCustomPreview();}}
+function syncCustomQuestions(){const b=[...document.querySelectorAll(".custom-question-input")];if(b.length)customQuestions=b.map(x=>x.value);}
+function addCustomQuestion(text=""){syncCustomQuestions();if(customQuestions.length>=20){alert("You can add up to 20 questions in one custom set.");return;}customQuestions.push(text);renderCustomQuestions();}
+function renderCustomQuestions(){const box=document.getElementById("customQuestionList");if(!box)return;box.innerHTML="";customQuestions.forEach((q,i)=>{const row=document.createElement("div");row.className="custom-question-row";row.innerHTML=`<div class="custom-question-number">${i+1}</div><textarea class="custom-question-input" maxlength="500" placeholder="Enter interview question ${i+1}" oninput="syncCustomQuestions();updateCustomPreview()"></textarea><div class="custom-question-actions"><button type="button" class="mini-btn" onclick="moveCustomQuestion(${i},-1)">↑</button><button type="button" class="mini-btn" onclick="moveCustomQuestion(${i},1)">↓</button><button type="button" class="mini-btn danger-btn" onclick="deleteCustomQuestion(${i})">Delete</button></div>`;row.querySelector("textarea").value=q;box.appendChild(row);});updateCustomPreview();}
+function moveCustomQuestion(i,d){syncCustomQuestions();const j=i+d;if(j<0||j>=customQuestions.length)return;[customQuestions[i],customQuestions[j]]=[customQuestions[j],customQuestions[i]];renderCustomQuestions();}
+function deleteCustomQuestion(i){syncCustomQuestions();customQuestions.splice(i,1);if(!customQuestions.length)customQuestions=[""];renderCustomQuestions();}
+function clearCustomQuestions(){if(!confirm("Clear all questions in this custom set?"))return;customQuestions=[""];customPreviewOrder=[];document.getElementById("customSetName").value="";renderCustomQuestions();}
+function togglePasteQuestions(){document.getElementById("pasteQuestionsPanel").classList.toggle("hidden");}
+function importPastedQuestions(){syncCustomQuestions();const raw=document.getElementById("pasteQuestions").value;let added=raw.split(/\r?\n/).map(x=>x.replace(/^\s*(?:[-•*]|\d+[\.\)])\s*/,"").trim()).filter(Boolean);if(!added.length){alert("Paste at least one question, with one question on each line.");return;}let existing=customQuestions.filter(q=>q.trim());customQuestions=[...existing,...added].slice(0,20);document.getElementById("pasteQuestions").value="";document.getElementById("pasteQuestionsPanel").classList.add("hidden");renderCustomQuestions();if(existing.length+added.length>20)alert("Interview Gym kept the first 20 questions.");}
+function shuffledCopy(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+function updateCustomPreview(){syncCustomQuestions();const valid=customQuestions.map(q=>q.trim()).filter(Boolean);const random=document.getElementById("customOrder")?.value==="random";document.getElementById("shuffleAgainBtn")?.classList.toggle("hidden",!random);if(!random)customPreviewOrder=[...valid];else if(customPreviewOrder.length!==valid.length||!customPreviewOrder.every(q=>valid.includes(q)))customPreviewOrder=shuffledCopy(valid);const list=document.getElementById("customPreviewList");if(list)list.innerHTML=customPreviewOrder.map(q=>`<li>${escapeHtml(q)}</li>`).join("");}
+function shuffleCustomPreview(){syncCustomQuestions();customPreviewOrder=shuffledCopy(customQuestions.map(q=>q.trim()).filter(Boolean));updateCustomPreview();}
+function saveQuestionSet(){syncCustomQuestions();const qs=customQuestions.map(q=>q.trim()).filter(Boolean);if(!qs.length){alert("Add at least one question before saving the set.");return;}const data={type:"Interview Gym Question Set",version:1,name:document.getElementById("customSetName").value.trim(),questions:qs};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`Interview-Gym-Question-Set-${slug(data.name||"custom")}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);}
+function loadQuestionSet(event){const file=event.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);if(!Array.isArray(data.questions))throw new Error();customQuestions=data.questions.map(q=>String(q).trim()).filter(Boolean).slice(0,20);if(!customQuestions.length)customQuestions=[""];document.getElementById("customSetName").value=String(data.name||"").slice(0,80);customPreviewOrder=[];renderCustomQuestions();}catch(e){alert("That file is not a valid Interview Gym question set.");}event.target.value="";};reader.readAsText(file);}
+
 async function startInterview(){
-  role=document.getElementById("role").value;
-  if(!role){alert("Please choose a job role first.");return;}
-  const count=parseInt(document.getElementById("questionCount").value,10);
-  questions=[...questionBank[role]].sort(()=>Math.random()-0.5).slice(0,count);
-  qIndex=0; recordings=[]; totalSeconds=0;
-  document.getElementById("setup").classList.add("hidden");
-  document.getElementById("complete").classList.add("hidden");
-  document.getElementById("interview").classList.remove("hidden");
-  document.getElementById("roleTitle").textContent=role+" — Interview";
-  try{
-    stream=await navigator.mediaDevices.getUserMedia({video:true,audio:true});
-    document.getElementById("preview").srcObject=stream;
-    showQuestion();
-  }catch(e){
-    document.getElementById("recordStatus").textContent="Camera/microphone access was not granted. You can still review the questions, but recording requires browser permission.";
-    showQuestion();
+  practiceSource=currentPracticeSource();
+  if(practiceSource==="custom"){
+    syncCustomQuestions();
+    const valid=customQuestions.map(q=>q.trim()).filter(Boolean);
+    if(!valid.length){alert("Please add at least one interview question first.");return;}
+    const random=document.getElementById("customOrder").value==="random";
+    if(random){if(customPreviewOrder.length!==valid.length||!customPreviewOrder.every(q=>valid.includes(q)))customPreviewOrder=shuffledCopy(valid);questions=[...customPreviewOrder];}
+    else questions=[...valid];
+    role=document.getElementById("customSetName").value.trim()||"My Custom Question Set";
+  }else{
+    role=document.getElementById("role").value;
+    if(!role){alert("Please choose a job role first.");return;}
+    const count=parseInt(document.getElementById("questionCount").value,10);
+    questions=shuffledCopy(questionBank[role]).slice(0,count);
   }
+  qIndex=0;recordings=[];totalSeconds=0;sessionRecorder=null;sessionChunks=[];sessionBlob=null;
+  document.getElementById("setup").classList.add("hidden");document.getElementById("complete").classList.add("hidden");document.getElementById("interview").classList.remove("hidden");document.getElementById("roleTitle").textContent=role+" — Interview";
+  try{stream=await navigator.mediaDevices.getUserMedia({video:true,audio:true});document.getElementById("preview").srcObject=stream;showQuestion();}
+  catch(e){document.getElementById("recordStatus").textContent="Camera/microphone access was not granted. You can still review the questions, but recording requires browser permission.";showQuestion();}
 }
 function showQuestion(){
   document.getElementById("questionLabel").textContent=`Question ${qIndex+1} of ${questions.length}`;
@@ -947,6 +996,9 @@ function downloadSummary(){
 }
 function formatTime(sec){const m=Math.floor(sec/60),s=Math.floor(sec%60);return `${m}:${String(s).padStart(2,"0")}`}
 function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"")}
+
+renderCustomQuestions();
+togglePracticeSource();
 </script>
 </body>
 </html>
